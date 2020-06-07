@@ -5,10 +5,10 @@ block content
     .col-2
       .pb-2.mt-2.mb-4
         h3 Dashboard
-    .col-10
+    .col-10.text-right
       form(action='/form/create', method='POST')
         input(type='hidden', name='_csrf', value=_csrf)
-        button.btn.btn-primary.text-right Create Form
+        button.btn.btn-primary Create Form
 
   form(action='/account/profile', method='POST')
     input(type='hidden', name='_csrf', value=_csrf)
