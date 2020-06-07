@@ -1,8 +1,14 @@
 extends layout
 
 block content
-  .pb-2.mt-2.mb-4.border-bottom
-    h3 Dashboard
+  .row
+    .col-2
+      .pb-2.mt-2.mb-4.border-bottom
+        h3 Dashboard
+    .col-10
+      form(action='/form/create', method='POST')
+        input(type='hidden', name='_csrf', value=_csrf)
+        button.btn.btn-primary
 
   form(action='/account/profile', method='POST')
     input(type='hidden', name='_csrf', value=_csrf)
