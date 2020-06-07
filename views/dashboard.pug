@@ -3,12 +3,12 @@ extends layout
 block content
   .row
     .col-2
-      .pb-2.mt-2.mb-4.border-bottom
+      .pb-2.mt-2.mb-4
         h3 Dashboard
     .col-10
       form(action='/form/create', method='POST')
         input(type='hidden', name='_csrf', value=_csrf)
-        button.btn.btn-primary
+        button.btn.btn-primary.text-right Create Form
 
   form(action='/account/profile', method='POST')
     input(type='hidden', name='_csrf', value=_csrf)
