@@ -837,9 +837,7 @@ exports.postUpdateForm = (req, res) => {
 				msg: 'Form updated!'
 			});
 
-			res.render('form', {
-				form: form
-			});
+			res.redirect('/form/' + form.id);
 		});
 	});
 };
