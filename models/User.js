@@ -22,6 +22,8 @@ const userSchema = new mongoose.Schema({
   quickbooks: String,
   tokens: Array,
 
+  forms: Array,
+
   profile: {
     name: String,
     gender: String,

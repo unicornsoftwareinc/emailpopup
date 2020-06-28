@@ -8,6 +8,7 @@ const _ = require('lodash');
 const validator = require('validator');
 const mailChecker = require('mailchecker');
 const User = require('../models/User');
+const Form = require('../models/Form');
 
 const randomBytesAsync = promisify(crypto.randomBytes);
 
@@ -718,4 +719,44 @@ exports.postForgot = (req, res, next) => {
 		.then(sendForgotPasswordEmail)
 		.then(() => res.redirect('/forgot'))
 		.catch(next);
+};
+
+/**
+ * POST /form/create
+ * Create a new form.
+ */
+exports.postCreateForm = (req, res) => {
+	User.findById(req.user.id, (err, user) => {
+		if (err) {
+			console.log('Error creating form');
+
+			return res.redirect('/dashboard');
+		}
+
+		const form = new Form();
+
+		form.save((err) => {
+			if (err) {
+				console.log('Error creating form');
+
+				return res.redirect('/dashboard');
+			}
+
+			user.forms.push(form.id);
+
+			user.save((err) => {
+				if (err) {
+					console.log('Error creating form');
+
+					return res.redirect('/dashboard');
+				}
+
+				req.flash('success', {
+					msg: 'New form created!'
+				});
+
+				res.redirect('/dashboard');
+			});
+		});		
+	});
 };
