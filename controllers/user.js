@@ -814,9 +814,17 @@ exports.postUpdateForm = (req, res) => {
 			return res.redirect('/dashboard');
 		}
 
-		let name = req.body.name || '';
+		form.name = req.body.name || '';
 
-		form.name = name;
+		form.headline = req.body.headline || '';
+
+		form.buttonText = req.body.buttonText || '';
+
+		form.backgroundColor = req.body.backgroundColor || '';
+
+		form.headlineColor = req.body.headlineColor || '';
+
+		form.buttonColor = req.body.buttonColor || '';
 
 		form.save((err) => {
 			if (err) {
