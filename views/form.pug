@@ -41,16 +41,16 @@ block content
     h3 Code
 
   -
-    let html0 = `<div style="background-color: rgba(0,0,0,0.5) !important; height: 100% !important;">`;
+    let html0 = `<div id="emailPopUpExampleBackground" style="background-color: rgba(0,0,0,0.5) !important; height: 100% !important;">`;
     let html1 = `<div style="background:` + form.backgroundColor + ` !important; width: 400px !important; margin-left: auto !important; margin-right: auto !important; top: 50% !important; position: relative !important; transform: translateY(-50%) !important; padding: 16px !important;">`;
-    let html2 = `<div style="text-align: right !important;"><button style="background:none !important; border-width: 0 !important;" type="submit">X</button></div>`;
+    let html2 = `<div style="text-align: right !important;"><button id="emailPopUpExampleClose" style="background:none !important; border-width: 0 !important;" type="submit">X</button></div>`;
     let html3 = `<form id="emailPopUpExampleForm" action="https://infinite-lowlands-01206.herokuapp.com/form/register/` + form.id + `" method="POST">`;
     let html4 = `<div><h3 style="color:` + form.headlineColor + ` !important; text-align: center !important;">` + form.headline + `</h3></div>`;
     let html5 = `<div style="text-align: center !important;"><input style="width: 150px !important;" type="email" name="email" placeholder="Email" required></div>`;
     let html6 = `<div style="text-align: center !important;"><button style="background:` + form.buttonColor + ` !important; border-width: 0 !important; width: 150px !important;" type="submit">` + form.buttonText + `</button></div></form></div>`;
     let html7 = `<script src="https://infinite-lowlands-01206.herokuapp.com/js/emailPopUp.js"></script>`;
 
-    var html = html0 + html1 + html2 + html3 + html4 + html5 + html6;
+    var html = html0 + html1 + html2 + html3 + html4 + html5 + html6 + html7;
   
   .form-group.row
     label(class='col-md-2 col-form-label font-weight-bold') Copy and paste this HTML wherever you want your registration form to appear.
