@@ -164,8 +164,31 @@ exports.getAccount = (req, res) => {
  * Dashboard page.
  */
 exports.getDashboard = (req, res) => {
-	res.render('dashboard', {
-		title: 'Dashboard'
+	User.findById(req.user.id, (err, user) => {
+		if (err) {
+			console.log('Error loading dashboard.');
+
+			return res.redirect('/');
+		}
+
+		Form.find({
+			'_id': {
+				$in: user.forms
+			}
+		}, (error, forms) => {
+			if (error) {
+				req.flash('errors', {
+					msg: 'Error loading dashboard.'
+				});
+
+				return res.redirect('/');
+			}
+
+			res.render('dashboard', {
+				title: 'Dashboard',
+				forms: forms
+			});
+		});	
 	});
 };
 
