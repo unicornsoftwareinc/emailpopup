@@ -160,39 +160,6 @@ exports.getAccount = (req, res) => {
 };
 
 /**
- * GET /dashboard
- * Dashboard page.
- */
-exports.getDashboard = (req, res) => {
-	User.findById(req.user.id, (err, user) => {
-		if (err) {
-			console.log('Error loading dashboard.');
-
-			return res.redirect('/');
-		}
-
-		Form.find({
-			'_id': {
-				$in: user.forms
-			}
-		}, (error, forms) => {
-			if (error) {
-				req.flash('errors', {
-					msg: 'Error loading dashboard.'
-				});
-
-				return res.redirect('/');
-			}
-
-			res.render('dashboard', {
-				title: 'Dashboard',
-				forms: forms
-			});
-		});	
-	});
-};
-
-/**
  * POST /account/profile
  * Update profile information.
  */
@@ -742,6 +709,57 @@ exports.postForgot = (req, res, next) => {
 		.then(sendForgotPasswordEmail)
 		.then(() => res.redirect('/forgot'))
 		.catch(next);
+};
+
+/**
+ * GET /dashboard
+ * Dashboard page.
+ */
+exports.getDashboard = (req, res) => {
+	User.findById(req.user.id, (err, user) => {
+		if (err) {
+			console.log('Error loading dashboard.');
+
+			return res.redirect('/');
+		}
+
+		Form.find({
+			'_id': {
+				$in: user.forms
+			}
+		}, (error, forms) => {
+			if (error) {
+				req.flash('errors', {
+					msg: 'Error loading dashboard.'
+				});
+
+				return res.redirect('/');
+			}
+
+			res.render('dashboard', {
+				title: 'Dashboard',
+				forms: forms
+			});
+		});	
+	});
+};
+
+/**
+ * GET /form
+ * Form page.
+ */
+exports.getForm = (req, res) => {
+	Form.findById(req.params.id, (err, form) => {
+		if (err) {
+			console.log('Error loading form.');
+
+			return res.redirect('/dashboard');
+		}
+
+		res.render('form', {
+			form: form
+		});
+	});
 };
 
 /**

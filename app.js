@@ -147,6 +147,7 @@ app.post('/account/delete', passportConfig.isAuthenticated, userController.postD
 app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userController.getOauthUnlink);
 app.get('/dashboard', passportConfig.isAuthenticated, userController.getDashboard);
 app.post('/form/create', passportConfig.isAuthenticated, userController.postCreateForm);
+app.get('/form/:id', passportConfig.isAuthenticated, userController.getForm);
 
 /**
  * API examples routes.
