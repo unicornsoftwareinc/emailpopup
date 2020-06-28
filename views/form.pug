@@ -42,11 +42,11 @@ block content
 
   -
     let html0 = `<div style="background:` + form.backgroundColor + `">`;
-    let html1 = `<div><button style="background:` + form.buttonColor + `" type="submit">X</button></div>`;
+    let html1 = `<div style="text-align: right !important;"><button style="background:none !important; border-width: 0 !important;" type="submit">X</button></div>`;
     let html2 = `<form id="emailPopUpExampleForm" action="https://infinite-lowlands-01206.herokuapp.com/form/register/` + form.id + `" method="POST">`;
-    let html3 = `<div><h3 style="color:` + form.headlineColor + `">` + form.headline + `</h3></div>`;
-    let html4 = `<div><input type="email" name="email" placeholder="Email" required=""></div>`;
-    let html5 = `<div><button style="background:` + form.buttonColor + `" type="submit">` + form.buttonText + `</button></div></form></div>`;
+    let html3 = `<div><h3 style="color:` + form.headlineColor + ` !important; text-align: center !important;">` + form.headline + `</h3></div>`;
+    let html4 = `<div style="text-align: center !important;"><input style="width: 150px !important;" type="email" name="email" placeholder="Email" required></div>`;
+    let html5 = `<div style="text-align: center !important;"><button style="background:` + form.buttonColor + ` !important; border-width: 0 !important; width: 150px !important;" type="submit">` + form.buttonText + `</button></div></form></div>`;
     let html6 = `<script src="https://infinite-lowlands-01206.herokuapp.com/js/emailPopUp.js"></script>`;
 
     var html = html0 + html1 + html2 + html3 + html4 + html5 + html6;
