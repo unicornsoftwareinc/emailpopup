@@ -52,9 +52,9 @@ block content
     var html = html0 + html1 + html2 + html3 + html4 + html5 + html6;
   
   .form-group.row
-    label(class='col-md-2 col-form-label font-weight-bold', for='message') Copy and paste this HTML wherever you want your registration form to appear.
+    label(class='col-md-2 col-form-label font-weight-bold') Copy and paste this HTML wherever you want your registration form to appear.
     .col-md-8
-      textarea.form-control(name='message', id='message', rows='7', readonly='readonly')
+      textarea.form-control(rows='7', readonly='readonly')
         = html
 
   .pb-2.mt-2.mb-4.border-bottom
