@@ -11,15 +11,14 @@ block content
         button.btn.btn-primary Create Form
 
   each form in forms
-    .card.mt-6.shadow-dark
+    .card.mt-6.shadow
       .card-body
         .row
-          .col-9.pr-0
-            .d-sm-flex.align-items-center
-              h3.font-weight-bold.mr-3
-                = form.name ? form.name : 'Untitled Form'
-          .col-3.pl-0.my-auto
+          .col-9
+            h3.font-weight-bold.mr-3
+              = form.name ? form.name : 'Untitled Form'
+          .col-3.my-auto.text-right
             a(href='/form/' + form.id)
-              button.btn.btn-secondary.btn-sm
+              button.btn.btn-primary.btn-sm
                 i.fas.fa-pencil-alt.mr-3
                 | View
