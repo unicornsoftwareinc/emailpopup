@@ -148,6 +148,7 @@ app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userControl
 app.get('/dashboard', passportConfig.isAuthenticated, userController.getDashboard);
 app.post('/form/create', passportConfig.isAuthenticated, userController.postCreateForm);
 app.get('/form/:id', passportConfig.isAuthenticated, userController.getForm);
+app.post('/form/update/:id', passportConfig.isAuthenticated, userController.postUpdateForm);
 
 /**
  * API examples routes.

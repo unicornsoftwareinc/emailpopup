@@ -801,3 +801,37 @@ exports.postCreateForm = (req, res) => {
 		});		
 	});
 };
+
+/**
+ * GET /form/update
+ * Update form.
+ */
+exports.postUpdateForm = (req, res) => {
+	Form.findById(req.params.id, (err, form) => {
+		if (err) {
+			console.log('Error updating form.');
+
+			return res.redirect('/dashboard');
+		}
+
+		let name = req.body.name || '';
+
+		form.name = name;
+
+		form.save((err) => {
+			if (err) {
+				console.log('Error updating form');
+
+				return res.redirect('/dashboard');
+			}
+
+			req.flash('success', {
+				msg: 'Form updated!'
+			});
+
+			res.render('form', {
+				form: form
+			});
+		});
+	});
+};
