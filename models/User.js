@@ -23,6 +23,9 @@ const userSchema = new mongoose.Schema({
   tokens: Array,
 
   forms: Array,
+  stripeSubscriptionID: String,
+  stripeSubscriptionStatus: String,
+  stripeSubscriptionPeriodEnd: String,
 
   profile: {
     name: String,

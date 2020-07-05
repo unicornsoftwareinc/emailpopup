@@ -12,6 +12,7 @@ const Form = require('../models/Form');
 const {
 	parse
 } = require('json2csv');
+const stripe = require('stripe')(process.env.STRIPE_S_KEY);
 const randomBytesAsync = promisify(crypto.randomBytes);
 
 /**
@@ -905,5 +906,98 @@ exports.getExportFormEmails = (req, res) => {
 		res.set('Content-Type', 'text/csv');
 
 		res.status(200).send(csv);
+	});
+};
+
+/**
+ * POST /signup/monthly
+ * Sign up to monthly plan.
+ */
+exports.postSignUpMonthly = (req, res) => {
+	req.assert('email', 'Email is not valid').isEmail();
+	req.assert('password', 'Password must be at least 4 characters long').len(4);
+	req.sanitize('email').normalizeEmail({
+		gmail_remove_dots: false
+	});
+
+	const errors = req.validationErrors();
+
+	if (errors) {
+		console.log(errors);
+
+		req.flash('errors', errors);
+
+		return res.redirect('/');
+	}
+
+	const user = new User({
+		email: req.body.email,
+		password: req.body.password
+	});
+
+	User.findOne({
+		email: req.body.email
+	}, (err, existingUser) => {
+		if (err) {
+			return res.redirect('/');
+		}
+		if (existingUser) {
+			console.log('Account with that email address already exists.');
+
+			req.flash('errors', {
+				msg: 'Account with that email address already exists.'
+			});
+
+			return res.redirect('/');
+		}
+
+		stripe.customers.create({
+				email: req.body.email,
+				source: req.body.stripeToken
+			})
+			.then(customer =>
+				stripe.subscriptions.create({
+					customer: customer.id,
+					items: [{
+						price: process.env.STRIPE_PRICE_1
+					}]
+				}))
+			.then(subscription => {
+				user.stripeSubscriptionID = subscription.id || '';
+
+				user.stripeSubscriptionStatus = subscription.status || '';
+
+				user.stripeSubscriptionPeriodEnd = subscription.current_period_end || '';
+
+				user.save((err) => {
+					if (err) {
+						console.log('Error creating your account. Please try again or contact support.');
+
+						req.flash('errors', {
+							msg: 'Error creating your account. Please try again or contact support.'
+						});
+
+						return res.redirect('/');
+					}
+
+					req.logIn(user, (err) => {
+						if (err) {
+							console.log('Error creating your account. Please try again or contact support.');
+
+							req.flash('errors', {
+								msg: 'Error creating your account. Please try again or contact support.'
+							});
+
+							return res.redirect('/');
+						}
+
+						req.flash('success', {
+							msg: 'Thank you for subscribing!'
+						});
+
+						res.redirect('/dashboard');
+					});
+				});
+			});
 	});
 };

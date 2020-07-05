@@ -1,27 +1,116 @@
-extends layout
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    meta(name='theme-color' content='#4DA5F4')
+    meta(name='csrf-token', content=_csrf)
+    title #{title} - Example Email Pop Up Software
+    link(rel='shortcut icon', href='/favicon.png')
+    link(rel='stylesheet', href='/css/main.css')
+    script(src='https://js.stripe.com/v3/')
+    block head
 
-block content
-  h1 Hackathon Starter
-  p.lead A boilerplate for Node.js web applications.
-  hr
-  .row
-    .col-md-6
-      h2 Heading
-      p Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-      p
-        a.btn.btn-raised(href='#', role='button') View details »
-    .col-md-6
-      h2 Heading
-      p Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-      p
-        a.btn.btn-raised(href='#', role='button') View details »
-    .col-md-6
-      h2 Heading
-      p Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-      p
-        a.btn.btn-raised(href='#', role='button') View details »
-    .col-md-6
-      h2 Heading
-      p Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-      p
-        a.btn.btn-raised(href='#', role='button') View details »
+  body
+    include partials/header
+
+    .container
+      include partials/flash
+
+      h1 Example Email Pop Up Software
+      p.lead A software that lets you build email pop up forms and embed them into your website.
+      hr
+      .row
+        .col
+          h1.mb-0.font-weight-bold.text-center
+            | Sign up
+          p.mb-5.text-center.text-muted
+            | Monthly plan.
+            br
+            | $14.99 / month.
+          form#payment-form(action='/signup/monthly', method='POST')
+            input(type='hidden', name='_csrf', value=_csrf)
+            .form-group
+              label(for='email')
+                | Email Address
+              input#email.form-control(type='email', name='email', placeholder='Email')
+            .form-group
+              label(for='password')
+                | Password
+              input#password.form-control(type='password', name='password', placeholder='Password')
+            label
+              | Credit Card
+            #card-element
+            #card-errors(role='alert')
+            button.btn.btn-block.btn-primary.mb-6(type='submit')
+              | Sign up
+
+            p.mb-0.text-center.text-muted(style='font-size: 0.875rem')
+              | By creating an account, you agree to the 
+              a.font-weight-bold.text-primary(href='/termsofservice') Terms of Service 
+              | and 
+              a.font-weight-bold.text-primary(href='/privacypolicy') Privacy Policy
+              | .
+    
+    include partials/footer
+
+    script(src='/js/lib/jquery.min.js')
+    script(src='/js/lib/popper.min.js')
+    script(src='/js/lib/bootstrap.min.js')
+    script(src='/js/main.js')
+
+    // Google Analytics: change UA-XXXXX-X to be your site's ID
+    script.
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-XXXXX-X', 'auto');
+      ga('send', 'pageview');
+
+    script.
+      var stripe = Stripe('pk_test_739bFXFkvQo06d3CeI60cYfU');
+      var elements = stripe.elements();
+
+      var card = elements.create('card');
+
+      card.mount('#card-element');
+
+      card.addEventListener('change', function(event) {
+        var displayError = document.getElementById('card-errors');
+        if (event.error) {
+          displayError.textContent = event.error.message;
+          console.log(event.error.message);
+        } else {
+          displayError.textContent = '';
+        }
+      });
+
+      var form = document.getElementById('payment-form');
+      form.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        stripe.createToken(card).then(function(result) {
+          if (result.error) {
+            var errorElement = document.getElementById('card-errors');
+            errorElement.textContent = result.error.message;
+            console.log(result.error.message);
+          } else {
+            stripeTokenHandler(result.token);
+            console.log('handler');
+          }
+        });
+      });
+
+      function stripeTokenHandler(token) {
+        var form = document.getElementById('payment-form');
+        var hiddenInput = document.createElement('input');
+        hiddenInput.setAttribute('type', 'hidden');
+        hiddenInput.setAttribute('name', 'stripeToken');
+        hiddenInput.setAttribute('value', token.id);
+        form.appendChild(hiddenInput);
+
+        form.submit();
+      }
+    
