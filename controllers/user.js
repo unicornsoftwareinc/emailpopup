@@ -895,7 +895,7 @@ exports.getExportFormEmails = (req, res) => {
 			fields
 		});
 
-		res.setHeader('Content-disposition', 'attachment; filename=emails.csv');
+		res.setHeader('Content-disposition', 'attachment; filename=registrants.csv');
 
 		res.set('Content-Type', 'text/csv');
 
