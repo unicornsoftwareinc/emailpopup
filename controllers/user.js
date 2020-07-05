@@ -847,9 +847,9 @@ exports.postUpdateForm = (req, res) => {
  * Register on a particular form.
  */
 exports.postRegisterForm = (req, res) => {
-	console.log(req.get('origin'));
+	console.log(req.get('Referrer'));
 
-	return res.redirect(req.get('origin'));
+	return res.redirect(req.get('Referrer'));
 
 	// Form.findById(req.params.id, (err, form) => {
 	// 	if (err) {
