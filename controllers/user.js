@@ -803,7 +803,7 @@ exports.postCreateForm = (req, res) => {
 };
 
 /**
- * GET /form/update
+ * POST /form/update
  * Update form.
  */
 exports.postUpdateForm = (req, res) => {
@@ -840,4 +840,48 @@ exports.postUpdateForm = (req, res) => {
 			res.redirect('/form/' + form.id);
 		});
 	});
+};
+
+/**
+ * POST /form/register/:id
+ * Register on a particular form.
+ */
+exports.postRegisterForm = (req, res) => {
+	console.log(req.get('origin'));
+
+	return res.redirect(req.get('origin'));
+
+	// Form.findById(req.params.id, (err, form) => {
+	// 	if (err) {
+	// 		console.log('Error updating form.');
+
+	// 		return res.redirect('/dashboard');
+	// 	}
+
+	// 	form.name = req.body.name || '';
+
+	// 	form.headline = req.body.headline || '';
+
+	// 	form.buttonText = req.body.buttonText || '';
+
+	// 	form.backgroundColor = req.body.backgroundColor || '';
+
+	// 	form.headlineColor = req.body.headlineColor || '';
+
+	// 	form.buttonColor = req.body.buttonColor || '';
+
+	// 	form.save((err) => {
+	// 		if (err) {
+	// 			console.log('Error updating form');
+
+	// 			return res.redirect('/dashboard');
+	// 		}
+
+	// 		req.flash('success', {
+	// 			msg: 'Form updated!'
+	// 		});
+
+	// 		res.redirect('/form/' + form.id);
+	// 	});
+	// });
 };

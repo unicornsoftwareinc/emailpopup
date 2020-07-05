@@ -149,6 +149,7 @@ app.get('/dashboard', passportConfig.isAuthenticated, userController.getDashboar
 app.post('/form/create', passportConfig.isAuthenticated, userController.postCreateForm);
 app.get('/form/:id', passportConfig.isAuthenticated, userController.getForm);
 app.post('/form/update/:id', passportConfig.isAuthenticated, userController.postUpdateForm);
+app.post('/form/register/:id', userController.postRegisterForm);
 
 /**
  * API examples routes.
