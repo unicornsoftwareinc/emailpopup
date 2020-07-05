@@ -847,41 +847,25 @@ exports.postUpdateForm = (req, res) => {
  * Register on a particular form.
  */
 exports.postRegisterForm = (req, res) => {
-	console.log(req.get('Referrer'));
+	Form.findById(req.params.id, (err, form) => {
+		if (err) {
+			console.log('Error registering.');
 
-	return res.redirect(req.get('Referrer'));
+			return res.redirect(req.get('Referrer'));
+		}
 
-	// Form.findById(req.params.id, (err, form) => {
-	// 	if (err) {
-	// 		console.log('Error updating form.');
+		let email = req.body.email || '';
 
-	// 		return res.redirect('/dashboard');
-	// 	}
+		form.emails.push(email);
 
-	// 	form.name = req.body.name || '';
+		form.save((err) => {
+			if (err) {
+				console.log('Error registering.');
 
-	// 	form.headline = req.body.headline || '';
+				return res.redirect(req.get('Referrer'));
+			}
 
-	// 	form.buttonText = req.body.buttonText || '';
-
-	// 	form.backgroundColor = req.body.backgroundColor || '';
-
-	// 	form.headlineColor = req.body.headlineColor || '';
-
-	// 	form.buttonColor = req.body.buttonColor || '';
-
-	// 	form.save((err) => {
-	// 		if (err) {
-	// 			console.log('Error updating form');
-
-	// 			return res.redirect('/dashboard');
-	// 		}
-
-	// 		req.flash('success', {
-	// 			msg: 'Form updated!'
-	// 		});
-
-	// 		res.redirect('/form/' + form.id);
-	// 	});
-	// });
+			res.redirect(req.get('Referrer'));
+		});
+	});
 };

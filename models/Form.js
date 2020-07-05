@@ -6,7 +6,8 @@ const formSchema = new mongoose.Schema({
   buttonText: String,
   backgroundColor: String,
   headlineColor: String,
-  buttonColor: String
+  buttonColor: String,
+  emails: Array
 
 }, { timestamps: true });
 
