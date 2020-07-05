@@ -62,9 +62,10 @@ block content
     h3 Emails
 
   .form-group.row
-    each email in form.emails
-      li 
-        = email
+    ul
+      each email in form.emails
+        li 
+          = email
 
   .pb-2.mt-2.mb-4.border-bottom
     h3 Delete Form
