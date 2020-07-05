@@ -21,7 +21,7 @@ function getCookie(cname) {
 	return "";
 }
 
-if (getCookie('emailPopUpExampleExpiration') !== 'true') {
+if (getCookie('emailPopUpExampleExpiration') !== '"true"') {
 	let background = document.getElementById('emailPopUpExampleBackground');
 
 	background.style.display = 'block';
@@ -36,5 +36,5 @@ if (getCookie('emailPopUpExampleExpiration') !== 'true') {
 		background.style.display = 'none';
 	}
 
-	setCookie('emailPopUpExampleExpiration', true, 7);
+	setCookie('emailPopUpExampleExpiration', 'true', 7);
 }
