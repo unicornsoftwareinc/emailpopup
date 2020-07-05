@@ -59,7 +59,10 @@ block content
         = html
 
   .pb-2.mt-2.mb-4.border-bottom
-    h3 Emails
+    h3 
+      | Emails (
+      = form.emails.length
+      | )
 
   .form-group.row.pl-3
     a(href='/form/export/emails/' + form.id) Export Emails
