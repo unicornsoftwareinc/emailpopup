@@ -9,6 +9,9 @@ const validator = require('validator');
 const mailChecker = require('mailchecker');
 const User = require('../models/User');
 const Form = require('../models/Form');
+const {
+	parse
+} = require('json2csv');
 
 const randomBytesAsync = promisify(crypto.randomBytes);
 
@@ -867,5 +870,31 @@ exports.postRegisterForm = (req, res) => {
 
 			res.redirect(req.get('Referrer'));
 		});
+	});
+};
+
+/**
+ * GET /form/export/emails/:id
+ * Export emails for a particular form.
+ */
+exports.getExportFormEmails = (req, res) => {
+	Form.findById(req.params.id, (err, form) => {
+		if (err) {
+			console.log('Error exporting emails.');
+
+			return res.redirect('/form/' + form.id);
+		}
+
+		let fields = ['email'];
+
+		let csv = parse(form.emails, {
+			fields
+		});
+
+		res.setHeader('Content-disposition', 'attachment; filename=emails.csv');
+
+		res.set('Content-Type', 'text/csv');
+
+		res.status(200).send(csv);
 	});
 };

@@ -150,6 +150,7 @@ app.post('/form/create', passportConfig.isAuthenticated, userController.postCrea
 app.get('/form/:id', passportConfig.isAuthenticated, userController.getForm);
 app.post('/form/update/:id', passportConfig.isAuthenticated, userController.postUpdateForm);
 app.post('/form/register/:id', userController.postRegisterForm);
+app.get('/form/export/emails/:id', passportConfig.isAuthenticated, userController.getExportFormEmails);
 
 /**
  * API examples routes.
