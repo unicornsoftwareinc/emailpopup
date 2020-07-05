@@ -887,7 +887,11 @@ exports.getExportFormEmails = (req, res) => {
 
 		let fields = ['email'];
 
-		let csv = parse(form.emails, {
+		let data = [{
+			email: 'test@test.com'
+		}]
+
+		let csv = parse(data, {
 			fields
 		});
 
