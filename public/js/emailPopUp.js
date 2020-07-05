@@ -21,7 +21,7 @@ function getCookie(cname) {
 	return "";
 }
 
-if (getCookie('emailPopUpExampleExpiration') !== '"true"') {
+if (getCookie('emailPopUpExampleExpiration') !== 'true') {
 	let background = document.getElementById('emailPopUpExampleBackground');
 
 	background.style.display = 'block';
