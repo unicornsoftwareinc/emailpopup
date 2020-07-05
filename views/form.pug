@@ -59,6 +59,14 @@ block content
         = html
 
   .pb-2.mt-2.mb-4.border-bottom
+    h3 Emails
+
+  .form-group.row
+    each email in form.emails
+      li 
+        = email
+
+  .pb-2.mt-2.mb-4.border-bottom
     h3 Delete Form
 
   form(action='/form/delete', method='POST', onsubmit="return confirm('Are you sure you want to delete your form?');")
