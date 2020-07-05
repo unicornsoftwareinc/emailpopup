@@ -9,7 +9,9 @@ const validator = require('validator');
 const mailChecker = require('mailchecker');
 const User = require('../models/User');
 const Form = require('../models/Form');
-const { Parser } = require('json2csv');
+const {
+	parse
+} = require('json2csv');
 
 const randomBytesAsync = promisify(crypto.randomBytes);
 
@@ -884,35 +886,15 @@ exports.getExportFormEmails = (req, res) => {
 		}
 
 		let fields = ['email'];
-		let opts = { fields };
 
-		console.log(form.emails);
+		let csv = parse(form.emails, {
+			fields
+		});
 
-		try {
-			let parser = new Parser(opts);
-			// let csv = parser.parse(form.emails);
-			let csv = parser.parse('test@email.com');
+		res.setHeader('Content-disposition', 'attachment; filename=emails.csv');
 
-			console.log(csv);
-			res.setHeader('Content-disposition', 'attachment; filename=registrants.csv');
+		res.set('Content-Type', 'text/csv');
 
-			res.set('Content-Type', 'text/csv');
-
-			res.status(200).send(csv);
-		} catch (err) {
-			console.error(err);
-
-			return res.redirect('/form/' + form.id);
-		}
-
-		
-
-		// let registrants = form.emails.concat(form.emails);
-
-		// let csv = parse(registrants, {
-		// 	fields
-		// });
-
-		
+		res.status(200).send(csv);
 	});
 };
