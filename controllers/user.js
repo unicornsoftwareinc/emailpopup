@@ -890,7 +890,9 @@ exports.getExportFormEmails = (req, res) => {
 
 		try {
 			let parser = new Parser(opts);
-			let csv = parser.parse(form.emails);
+			// let csv = parser.parse(form.emails);
+			let csv = parser.parse('test@email.com');
+
 			console.log(csv);
 			res.setHeader('Content-disposition', 'attachment; filename=registrants.csv');
 
