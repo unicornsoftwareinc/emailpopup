@@ -12,7 +12,6 @@ const Form = require('../models/Form');
 const {
 	parse
 } = require('json2csv');
-
 const randomBytesAsync = promisify(crypto.randomBytes);
 
 /**
@@ -885,11 +884,17 @@ exports.getExportFormEmails = (req, res) => {
 			return res.redirect('/form/' + form.id);
 		}
 
-		let fields = ['email'];
+		let data = [];
 
-		let data = [{
-			email: 'test@test.com'
-		}]
+		for (let i = 0; i < form.emails.length; i++) {
+			let item = {
+				email: form.emails[i]
+			}
+
+			data.push(item);
+		}
+
+		let fields = ['email'];
 
 		let csv = parse(data, {
 			fields
