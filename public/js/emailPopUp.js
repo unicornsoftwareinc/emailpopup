@@ -9,3 +9,7 @@ background.onclick = function() {
 document.getElementById('emailPopUpExampleClose').onclick = function() {
 	background.style.display = 'none';
 }
+
+document.getElementById('emailPopUpExampleForm').onclick = function() {
+	return false;
+}
