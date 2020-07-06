@@ -914,22 +914,6 @@ exports.getExportFormEmails = (req, res) => {
  * Sign up to monthly plan.
  */
 exports.postSignUpMonthly = (req, res) => {
-	req.assert('email', 'Email is not valid').isEmail();
-	req.assert('password', 'Password must be at least 4 characters long').len(4);
-	req.sanitize('email').normalizeEmail({
-		gmail_remove_dots: false
-	});
-
-	const errors = req.validationErrors();
-
-	if (errors) {
-		console.log(errors);
-
-		req.flash('errors', errors);
-
-		return res.redirect('/');
-	}
-
 	const user = new User({
 		email: req.body.email,
 		password: req.body.password
