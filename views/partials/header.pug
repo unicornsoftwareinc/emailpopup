@@ -8,8 +8,6 @@
       span.navbar-toggler-icon
     .collapse.navbar-collapse
       ul.nav.navbar-nav
-        li.nav-item(class=(title === 'Home') ? 'active' : undefined)
-          a.nav-link(href='/') Home
       ul.nav.navbar-nav.ml-auto
         if !user
           li.nav-item(class=(title === 'Login') ? 'active' : undefined)
