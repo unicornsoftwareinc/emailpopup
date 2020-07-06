@@ -914,8 +914,6 @@ exports.getExportFormEmails = (req, res) => {
  * Sign up to monthly plan.
  */
 exports.postSignUpMonthly = (req, res) => {
-
-	
 	const user = new User({
 		email: req.body.email,
 		password: req.body.password
